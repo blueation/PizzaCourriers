@@ -1,0 +1,4 @@
+C:\Users\Blueation\Documents\GitHub\PizzaCourriers\PizzaCourriers\bin\Debug\PizzaCourriers.exe
+C:\Users\Blueation\Documents\GitHub\PizzaCourriers\PizzaCourriers\bin\Debug\PizzaCourriers.pdb
+C:\Users\Blueation\Documents\GitHub\PizzaCourriers\PizzaCourriers\obj\x86\Debug\PizzaCourriers.exe
+C:\Users\Blueation\Documents\GitHub\PizzaCourriers\PizzaCourriers\obj\x86\Debug\PizzaCourriers.pdb

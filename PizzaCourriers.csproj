@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="DataClasses.cs" />
     <Compile Include="Display.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="Optimalizer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

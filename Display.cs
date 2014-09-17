@@ -5,7 +5,8 @@ using System.Text;
 
 namespace PizzaCourriers
 {
-    class Display
+    partial class Program
     {
+        
     }
 }
