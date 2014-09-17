@@ -9,53 +9,83 @@ namespace PizzaCourriers
     class Bezorger
     {
         public int ID;
-        public int resX, resY;  //quicker reference point for routeLength calculations
-
+        
         public List<Node> route = new List<Node>();
         public Node firstNode, lastNode;
         public int routeLength = 0;
 
-        public Bezorger(int ID, int resX, int resY)
+        public Bezorger(int ID)
         {
-            this.ID = ID; this.resX = resX; this.resY = resY;
+            this.ID = ID;
         }
 
-        public void AddtoStart(Node added)
+        public Node getRandomNode
+        {
+            get
+            {
+                if (route.Count == 0) return null;
+                return route[Program.random.Next(route.Count)];
+            }
+        }
+
+        public void AddNodetoStart(Node added)
         {
             if (firstNode == null)
             {   //no first node? no nodes at all.
                 route.Add(added);
+                added.onRoute = this;
                 firstNode = added;
                 lastNode = added;
-                routeLength += 2 * Help.dist(resX, resY, added.x, added.y);
+                routeLength += 2 * Help.dist(added, null);
             }
             else
             {
-                routeLength -= Help.dist(resX, resY, firstNode.x, firstNode.y);
+                routeLength -= Help.dist(firstNode, null);
                 route.Add(added);
+                added.onRoute = this;
                 added.next = firstNode;
                 firstNode.previous = added;
                 firstNode = added;
-                routeLength += Help.dist(resX, resY, added.x, added.y);
-                routeLength += Help.dist(added.x, added.y, added.next.x, added.next.y);
+                routeLength += Help.dist(added, null);
+                routeLength += Help.dist(added, added.next);
             }
         }
 
-        public void AddtoEnd(Node added)
+        public void AddNodetoEnd(Node added)
         {
             if (lastNode == null)
             {   //no last node? no nodes at all.
                 route.Add(added);
                 firstNode = added;
                 lastNode = added;
+                routeLength += 2 * Help.dist(added, null);
             }
             else
             {
+                routeLength -= Help.dist(lastNode, null);
                 route.Add(added);
                 added.previous = lastNode;
                 lastNode.next = added;
                 lastNode = added;
+                routeLength += Help.dist(added, null);
+                routeLength += Help.dist(added, added.previous);
             }
+        }
+
+        public string StringSolution()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(ID + ": ");
+            Node N = firstNode;
+            sb.Append("({0},{1})", N.x, N.y);
+            N = N.next;
+            while (N != null)
+            {
+                sb.Append(", ({0},{1})", N.x, N.y);
+                N = N.next;
+            }
+            sb.Append('\n');
+            return sb.ToString();
         }
     }
 
@@ -64,6 +94,7 @@ namespace PizzaCourriers
         public int ID;
         public int x, y;
         public Node next, previous;
+        public Bezorger onRoute;
 
         public Node(int ID, int x, int y)
         {
