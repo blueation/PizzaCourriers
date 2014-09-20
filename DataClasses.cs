@@ -28,47 +28,96 @@ namespace PizzaCourriers
             }
         }
 
+        public Node getRandomNodeNull //call this in case you are working between values 
+        {
+            get
+            {
+                int r = Program.random.Next(route.Count + 1);
+                if (route.Count == r)
+                    return null;
+                return route[r];
+            }
+        }
+
+        public void AddBefore(Node added, Node location) //if location is null, adds to end of route
+        {
+            if (location == null)
+                AddNodetoEnd(added);
+            else
+            {
+                route.Add(added);
+                added.next = location;
+                added.previous = location.previous;
+                location.previous = added;
+                added.previous.next = added;
+                {
+                    routeLength -= Help.dist(added.previous, location);
+                    routeLength += Help.dist(added.previous, added);
+                    routeLength += Help.dist(added, location);
+                }
+            }
+        }
+
+        //public int costsAddBefore(Node added, Node location)
+        //{
+            //if (location == null)
+                
+            
+        //}
+
         public void AddNodetoStart(Node added)
         {
+            //update costs
+            routeLength += costsAddNodetoStart(added);
+            route.Add(added);
+            added.onRoute = this;
+
             if (firstNode == null)
-            {   //no first node? no nodes at all.
-                route.Add(added);
-                added.onRoute = this;
+            {   //no first node? no nodes at all
                 firstNode = added;
                 lastNode = added;
-                routeLength += 2 * Help.dist(added, null);
             }
             else
             {
-                routeLength -= Help.dist(firstNode, null);
-                route.Add(added);
-                added.onRoute = this;
                 added.next = firstNode;
                 firstNode.previous = added;
                 firstNode = added;
-                routeLength += Help.dist(added, null);
-                routeLength += Help.dist(added, added.next);
+            }
+        }
+        public int costsAddNodetoStart(Node added)
+        {
+            if (firstNode == null)
+                return 2 * Help.dist(added, null);
+            else
+            {
+                return Help.dist(added, null) + Help.dist(added, firstNode) - Help.dist(firstNode, null);
             }
         }
 
         public void AddNodetoEnd(Node added)
         {
+            routeLength += costsAddNodetoEnd(added);
+            route.Add(added);
+
             if (lastNode == null)
             {   //no last node? no nodes at all.
-                route.Add(added);
                 firstNode = added;
                 lastNode = added;
-                routeLength += 2 * Help.dist(added, null);
             }
             else
             {
-                routeLength -= Help.dist(lastNode, null);
-                route.Add(added);
                 added.previous = lastNode;
                 lastNode.next = added;
                 lastNode = added;
-                routeLength += Help.dist(added, null);
-                routeLength += Help.dist(added, added.previous);
+            }
+        }
+        public int costsAddNodetoEnd(Node added)
+        {
+            if (lastNode == null)
+                return 2 * Help.dist(added, null);
+            else
+            {
+                return Help.dist(added, null) + Help.dist(added, lastNode) - Help.dist(lastNode, null);
             }
         }
 

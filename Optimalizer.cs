@@ -7,5 +7,6 @@ namespace PizzaCourriers
 {
     class Optimalizer
     {
+
     }
 }

@@ -32,7 +32,10 @@ namespace PizzaCourriers
                 bezorgers[i % 4].AddNodetoEnd(nodelist[i]);
             }
             
+            //optimalize
 
+
+            //output
         }
 
 
