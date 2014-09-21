@@ -41,6 +41,7 @@ namespace PizzaCourriers
 
         public void AddBefore(Node added, Node location) //if location is null, adds to end of route
         {
+            costsAddBefore(added, location);
             if (location == null)
                 AddNodetoEnd(added);
             else
@@ -50,20 +51,15 @@ namespace PizzaCourriers
                 added.previous = location.previous;
                 location.previous = added;
                 added.previous.next = added;
-                {
-                    routeLength -= Help.dist(added.previous, location);
-                    routeLength += Help.dist(added.previous, added);
-                    routeLength += Help.dist(added, location);
-                }
             }
         }
 
-        //public int costsAddBefore(Node added, Node location)
-        //{
-            //if (location == null)
-                
-            
-        //}
+        public int costsAddBefore(Node added, Node location)
+        {
+            if (location == null)
+                return costsAddNodetoEnd(added);
+            return Help.dist(added.previous, location) + Help.dist(added.previous, added) + Help.dist(added, location);
+        }
 
         public void AddNodetoStart(Node added)
         {
@@ -115,10 +111,7 @@ namespace PizzaCourriers
         {
             if (lastNode == null)
                 return 2 * Help.dist(added, null);
-            else
-            {
-                return Help.dist(added, null) + Help.dist(added, lastNode) - Help.dist(lastNode, null);
-            }
+            return Help.dist(added, null) + Help.dist(added, lastNode) - Help.dist(lastNode, null);
         }
 
         public string StringSolution()
