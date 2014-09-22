@@ -52,7 +52,8 @@ namespace PizzaCourriers
                 added.previous = location;
                 added.next = location.next;
                 location.next = added;
-                added.next.previous = added;
+                if (added.next != null)
+                    added.next.previous = added;
             }
         }
         public int costsAddAfter(Node added, Node location)
@@ -73,7 +74,8 @@ namespace PizzaCourriers
                 added.next = location;
                 added.previous = location.previous;
                 location.previous = added;
-                added.previous.next = added;
+                if (added.previous != null)
+                    added.previous.next = added;
             }
         }
         public int costsAddBefore(Node added, Node location)
