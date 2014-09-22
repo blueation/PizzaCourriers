@@ -19,7 +19,7 @@ namespace PizzaCourriers
             this.ID = ID;
         }
 
-        public Node getRandomNode
+        public Node getRandomNode //call this if you are working on specific nodes (like deleting nodes)
         {
             get
             {
@@ -28,7 +28,7 @@ namespace PizzaCourriers
             }
         }
 
-        public Node getRandomNodeNull //call this in case you are working between values 
+        public Node getRandomNodeOrNull //call this in case you are working between the nodes (like adding new ones)
         {
             get
             {
@@ -39,13 +39,36 @@ namespace PizzaCourriers
             }
         }
 
+        //KAN IEMAND DEZE FUNCTIES EVEN CONTROLEREN?
+        //***
+        public void AddAfter(Node added, Node location) //if location is null, adds to start of route
+        {
+            if (location == null)
+                AddNodetoStart(added);
+            else
+            {
+                routeLength += costsAddAfter(added, location);
+                route.Add(added);
+                added.previous = location;
+                added.next = location.next;
+                location.next = added;
+                added.next.previous = added;
+            }
+        }
+        public int costsAddAfter(Node added, Node location)
+        {
+            if (location == null)
+                return costsAddNodetoStart(added);
+            return Help.dist(added.next, added) + Help.dist(added, location) - Help.dist(added.next, location);
+        }
+
         public void AddBefore(Node added, Node location) //if location is null, adds to end of route
         {
-            costsAddBefore(added, location);
             if (location == null)
                 AddNodetoEnd(added);
             else
             {
+                routeLength += costsAddBefore(added, location);
                 route.Add(added);
                 added.next = location;
                 added.previous = location.previous;
@@ -53,12 +76,11 @@ namespace PizzaCourriers
                 added.previous.next = added;
             }
         }
-
         public int costsAddBefore(Node added, Node location)
         {
             if (location == null)
                 return costsAddNodetoEnd(added);
-            return Help.dist(added.previous, location) + Help.dist(added.previous, added) + Help.dist(added, location);
+            return Help.dist(added.previous, added) + Help.dist(added, location) - Help.dist(added.previous, location);
         }
 
         public void AddNodetoStart(Node added)
@@ -113,6 +135,7 @@ namespace PizzaCourriers
                 return 2 * Help.dist(added, null);
             return Help.dist(added, null) + Help.dist(added, lastNode) - Help.dist(lastNode, null);
         }
+        //***
 
         public string StringSolution()
         {
