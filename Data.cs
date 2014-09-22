@@ -11,29 +11,19 @@ namespace PizzaCourriers
         int minx = 0;
         int maxy = 218;
         int miny = 0;
-        int amountofdatainsmall = 10;
-        int amountofdatainmedium = 100;
-        int amountofdatainlarge = 1000;
+        int amountofdata = 100;
         int amountofsetspersize = 5;
-        public DataSet[] small;
-        public DataSet[] medium;
-        public DataSet[] large;
+        public DataSet[] dataset;
         Random random;
         
         public Data()
         {
-            small = new DataSet[amountofsetspersize];
-            medium = new DataSet[amountofsetspersize];
-            large = new DataSet[amountofsetspersize];
+            dataset = new DataSet[amountofsetspersize];
             random = new Random();
             for (int tel = 0; tel < 5; tel++)
-            {
-                small[tel] = new DataSet(amountofdatainsmall);                
-                medium[tel] = new DataSet(amountofdatainmedium);
-                large[tel] = new DataSet(amountofdatainlarge);
-                small[tel] = FillSets(small[tel]);
-                medium[tel] = FillSets(medium[tel]);
-                large[tel] = FillSets(large[tel]);
+            {            
+                dataset[tel] = new DataSet(amountofdata);
+                dataset[tel] = FillSets(dataset[tel]);
             }
             Console.ReadLine(); 
         }
