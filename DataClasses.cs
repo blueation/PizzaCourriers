@@ -39,8 +39,7 @@ namespace PizzaCourriers
             }
         }
 
-        //KAN IEMAND DEZE FUNCTIES EVEN CONTROLEREN?
-        //***
+        #region Functions to Add Nodes
         public void AddAfter(Node added, Node location) //if location is null, adds to start of route
         {
             if (location == null)
@@ -137,7 +136,56 @@ namespace PizzaCourriers
                 return 2 * Help.dist(added, null);
             return Help.dist(added, null) + Help.dist(added, lastNode) - Help.dist(lastNode, null);
         }
-        //***
+        #endregion
+
+        #region Functions to Remove Nodes
+        public void RemoveNode(Node removed)
+        {
+            routeLength += costsRemoveNode(removed);
+            if (removed.previous != null)
+                removed.previous.next = removed.next;
+            if (removed.next != null)
+                removed.next.previous = removed.previous;
+            removed.previous = null;
+            removed.next = null;
+            route.Remove(removed);
+        }
+        public int costsRemoveNode(Node removed)
+        {
+            return Help.dist(removed.previous, removed.next) - Help.dist(removed.previous, removed) - Help.dist(removed, removed.next);
+        }
+        #endregion
+
+        #region Functions with Other Effects on Nodes
+        public void FlipOrder(Node first, Node last)
+        {
+            costsFlipOrder(first, last);
+
+            //changes the cross-directional references between first, first.previous, last and last.next
+            Node helper = first.previous;
+            if (first.previous != null)
+                first.previous.next = last;
+            first.previous = last.next;
+            if (last.next != null)
+                last.next.previous = first;
+            last.next = helper;
+
+            //flips direction of route between the first and last nodes
+            Node IterationNode = first;
+            Node EndOnNode = last.next;
+            while (IterationNode != EndOnNode)
+            {
+                Node NextIterationNode = IterationNode.next;
+                IterationNode.next = IterationNode.previous;
+                IterationNode.previous = NextIterationNode;
+                IterationNode = NextIterationNode;
+            }
+        }
+        public int costsFlipOrder(Node first, Node last)
+        {
+            return Help.dist(first.previous, last) + Help.dist(first, last.next) - Help.dist(first.previous, first) - Help.dist(last, last.next);
+        }
+        #endregion
 
         public string StringSolution()
         {
