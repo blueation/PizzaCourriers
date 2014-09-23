@@ -19,6 +19,7 @@ namespace PizzaCourriers
             this.ID = ID;
         }
 
+        #region Properties to get Random Nodes
         public Node getRandomNode //call this if you are working on specific nodes (like deleting nodes)
         {
             get
@@ -27,7 +28,6 @@ namespace PizzaCourriers
                 return route[Program.random.Next(route.Count)];
             }
         }
-
         public Node getRandomNodeOrNull //call this in case you are working between the nodes (like adding new ones)
         {
             get
@@ -38,6 +38,7 @@ namespace PizzaCourriers
                 return route[r];
             }
         }
+        #endregion
 
         #region Functions to Add Nodes
         public void AddAfter(Node added, Node location) //if location is null, adds to start of route
@@ -95,12 +96,14 @@ namespace PizzaCourriers
             {   //no first node? no nodes at all
                 firstNode = added;
                 lastNode = added;
+                added.onRoute = this;
             }
             else
             {
                 added.next = firstNode;
                 firstNode.previous = added;
                 firstNode = added;
+                added.onRoute = this;
             }
         }
         public int costsAddNodetoStart(Node added)
@@ -122,12 +125,14 @@ namespace PizzaCourriers
             {   //no last node? no nodes at all.
                 firstNode = added;
                 lastNode = added;
+                added.onRoute = this;
             }
             else
             {
                 added.previous = lastNode;
                 lastNode.next = added;
                 lastNode = added;
+                added.onRoute = this;
             }
         }
         public int costsAddNodetoEnd(Node added)
@@ -144,10 +149,15 @@ namespace PizzaCourriers
             routeLength += costsRemoveNode(removed);
             if (removed.previous != null)
                 removed.previous.next = removed.next;
+            else
+                removed.onRoute.firstNode = removed.next;
             if (removed.next != null)
                 removed.next.previous = removed.previous;
+            else
+                removed.onRoute.lastNode = removed.previous;
             removed.previous = null;
             removed.next = null;
+            removed.onRoute = null;
             route.Remove(removed);
         }
         public int costsRemoveNode(Node removed)
@@ -157,7 +167,7 @@ namespace PizzaCourriers
         #endregion
 
         #region Functions with Other Effects on Nodes
-        public void FlipOrder(Node first, Node last)
+        public void FlipOrder(Node first, Node last) //2-opt
         {
             costsFlipOrder(first, last);
 
@@ -192,11 +202,11 @@ namespace PizzaCourriers
             StringBuilder sb = new StringBuilder();
             sb.Append(ID + ": ");
             Node N = firstNode;
-            sb.Append("({0},{1})", N.x, N.y);
+            sb.Append("(" + N.x + ", " + N.y +")");
             N = N.next;
             while (N != null)
             {
-                sb.Append(", ({0},{1})", N.x, N.y);
+                sb.Append("(" + N.x + ", " + N.y + ")");
                 N = N.next;
             }
             sb.Append('\n');

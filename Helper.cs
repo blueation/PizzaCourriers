@@ -19,13 +19,17 @@ namespace PizzaCourriers
                 x = Program.resX; y = Program.resY;
             }
             else
+            {
                 x = a.x; y = a.y;
+            }
             if (b == null)
             {
                 u = Program.resX; v = Program.resY;
             }
             else
-                u = a.x; v = a.y;
+            {
+                u = b.x; v = b.y;
+            }
             return dist(x, y, u, v);
         }
     }
