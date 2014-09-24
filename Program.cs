@@ -60,6 +60,10 @@ namespace PizzaCourriers
             SimulatedAnealing();
 
             //output
+
+            Console.WriteLine(BestSolutionCost);
+            Console.WriteLine(BestSolutionOutput);
+            Console.ReadLine();
         }
 
 

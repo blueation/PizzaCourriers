@@ -49,6 +49,7 @@ namespace PizzaCourriers
             {
                 routeLength += costsAddAfter(added, location);
                 route.Add(added);
+                added.onRoute = this;
                 added.previous = location;
                 added.next = location.next;
                 location.next = added;
@@ -71,6 +72,7 @@ namespace PizzaCourriers
             {
                 routeLength += costsAddBefore(added, location);
                 route.Add(added);
+                added.onRoute = this;
                 added.next = location;
                 added.previous = location.previous;
                 location.previous = added;
@@ -96,14 +98,12 @@ namespace PizzaCourriers
             {   //no first node? no nodes at all
                 firstNode = added;
                 lastNode = added;
-                added.onRoute = this;
             }
             else
             {
                 added.next = firstNode;
                 firstNode.previous = added;
                 firstNode = added;
-                added.onRoute = this;
             }
         }
         public int costsAddNodetoStart(Node added)
@@ -120,19 +120,18 @@ namespace PizzaCourriers
         {
             routeLength += costsAddNodetoEnd(added);
             route.Add(added);
+            added.onRoute = this;
 
             if (lastNode == null)
             {   //no last node? no nodes at all.
                 firstNode = added;
                 lastNode = added;
-                added.onRoute = this;
             }
             else
             {
                 added.previous = lastNode;
                 lastNode.next = added;
                 lastNode = added;
-                added.onRoute = this;
             }
         }
         public int costsAddNodetoEnd(Node added)
@@ -175,9 +174,13 @@ namespace PizzaCourriers
             Node helper = first.previous;
             if (first.previous != null)
                 first.previous.next = last;
+            else 
+                first.onRoute.firstNode = last;
             first.previous = last.next;
             if (last.next != null)
                 last.next.previous = first;
+            else
+                last.onRoute.lastNode = first;
             last.next = helper;
 
             //flips direction of route between the first and last nodes
@@ -202,8 +205,6 @@ namespace PizzaCourriers
             StringBuilder sb = new StringBuilder();
             sb.Append(ID + ": ");
             Node N = firstNode;
-            sb.Append("(" + N.x + ", " + N.y +")");
-            N = N.next;
             while (N != null)
             {
                 sb.Append("(" + N.x + ", " + N.y + ")");

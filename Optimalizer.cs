@@ -18,6 +18,8 @@ namespace PizzaCourriers
                 
                 if (r < opt2chance)
                 {
+                    Console.WriteLine("opt2");
+
                     Bezorger B = getRandomBezorgerNonEmpty;
                     Node n1 = B.getRandomNode;
                     Node n2 = B.getRandomNode;
@@ -40,6 +42,8 @@ namespace PizzaCourriers
                 }
                 else //(r < opt2chance + opt2halfchance)
                 {
+                    Console.WriteLine("opt2half");
+
                     int opt2halfcost = 0;
                     Bezorger B1 = getRandomBezorgerNonEmpty;
                     Node n = B1.getRandomNode;
@@ -50,6 +54,23 @@ namespace PizzaCourriers
                     opt2halfcost += B1.costsRemoveNode(n);
                     B1.RemoveNode(n);
                     //{
+                    int qc = 0;
+                    foreach (Bezorger b in bezorgers)
+                    {
+                        Node nc = b.firstNode;
+                        Node nprev = null;
+                        while (nc != null)
+                        {
+                            qc += Help.dist(nprev, nc);
+                            nprev = nc;
+                            nc = nc.next;
+                        }
+                        qc += Help.dist(nprev, null);
+                    }
+                    if (qc != CurrentCost + opt2halfcost)
+                        i += 0;
+
+
                         Bezorger B2 = bezorgers[random.Next(bezorgers.Length)];
                         Node l = B2.getRandomNodeOrNull;
                         opt2halfcost += B2.costsAddAfter(n, l);
@@ -68,7 +89,32 @@ namespace PizzaCourriers
                 {
                     BestSolutionCost = CurrentCost;
                     BestSolutionOutput = StringSolution();
+
+                    //------------------------------------
+                    Console.WriteLine(i);
+                    Console.WriteLine(BestSolutionCost);
+                    Console.WriteLine(BestSolutionOutput);
+                    //------------------------------------
+
                 }
+
+                int q = 0;
+                foreach (Bezorger b in bezorgers)
+                {
+                    Node n = b.firstNode;
+                    Node nprev = null;
+                    while (n != null)
+                    {
+                        q += Help.dist(nprev, n);
+                        nprev = n;
+                        n = n.next;
+                    }
+                    q += Help.dist(nprev, null);
+                }
+                if (q != CurrentCost)
+                    i += 0;
+
+                Console.WriteLine("----");
                 i++;
                 if (i % changepercooldown == 0)
                     temperature *= cooldown;
