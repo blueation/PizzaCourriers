@@ -61,7 +61,7 @@ namespace PizzaCourriers
         {
             if (location == null)
                 return costsAddNodetoStart(added);
-            return Help.dist(added.next, added) + Help.dist(added, location) - Help.dist(added.next, location);
+            return Help.dist(location.next, added) + Help.dist(added, location) - Help.dist(location.next, location);
         }
 
         public void AddBefore(Node added, Node location) //if location is null, adds to end of route

@@ -32,11 +32,11 @@ namespace PizzaCourriers
         static void Main(string[] args)
         {
             //initialize uninitialized data, no clue wether these values are correct or not.
-            cooldown = 0.95;
+            cooldown = 0.97;
             temperature = 20000.0;
-            limit = 100.0;
-            changepercooldown = 10;
-            imax = 100000;
+            limit = 10.0;
+            changepercooldown = 800;
+            imax = 1000000;
 
             //load map into nodelist, restaurant into resX+resY
             InputFromFile("Simple.txt");
