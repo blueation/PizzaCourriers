@@ -10,15 +10,36 @@ namespace PizzaCourriers
     {
         public static void InputFromFile(string filename)
         {
-            using (TextReader sr = new StreamReader(filename))
+            if (filename != null && filename != "")
             {
+                using (TextReader sr = new StreamReader(filename))
+                {
+                    int id = 0;
+                    char[] coorchar = new char[] { '(', ',', ')' };
+                    string line = sr.ReadLine();
+                    string[] splitline = line.Split(coorchar);
+                    resX = int.Parse(splitline[1]); resY = int.Parse(splitline[2]);
+                    while ((line = sr.ReadLine()) != null)
+                    {
+                        splitline = line.Split(coorchar);
+                        nodelist.Add(new Node(id++, int.Parse(splitline[1]), int.Parse(splitline[2])));
+                    }
+                }
+            }
+            else
+            {
+                Data datamaker = new Data();
                 int id = 0;
+                int linenr = 0;
+                int linemax = datamaker.dataset[0].data.Length;
                 char[] coorchar = new char[] { '(', ',', ')' };
-                string line = sr.ReadLine();
+                string line = datamaker.dataset[0].data[linenr];
+                linenr++;
                 string[] splitline = line.Split(coorchar);
                 resX = int.Parse(splitline[1]); resY = int.Parse(splitline[2]);
-                while ((line = sr.ReadLine()) != null)
+                while (linenr < linemax && (line = datamaker.dataset[0].data[linenr]) != null && line != "")
                 {
+                    linenr++;
                     splitline = line.Split(coorchar);
                     nodelist.Add(new Node(id++, int.Parse(splitline[1]), int.Parse(splitline[2])));
                 }

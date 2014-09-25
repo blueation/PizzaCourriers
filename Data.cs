@@ -14,18 +14,18 @@ namespace PizzaCourriers
         int amountofdata = 100;
         int amountofsetspersize = 5;
         public DataSet[] dataset;
-        Random random;
+        //Random random;
         
         public Data()
         {
             dataset = new DataSet[amountofsetspersize];
-            random = new Random();
+            //random = new Random();
             for (int tel = 0; tel < 5; tel++)
             {            
                 dataset[tel] = new DataSet(amountofdata);
                 dataset[tel] = FillSets(dataset[tel]);
             }
-            Console.ReadLine(); 
+            //Console.ReadLine(); 
         }
 
         public DataSet FillSets(DataSet set)
@@ -41,8 +41,8 @@ namespace PizzaCourriers
             {
                 while (true)
                 {
-                    x = random.Next(minx, maxx);
-                    y = random.Next(miny, maxy);
+                    x = Program.random.Next(minx, maxx);
+                    y = Program.random.Next(miny, maxy);
                     if (!grid[x, y])
                     {
                         grid[x, y] = true;

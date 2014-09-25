@@ -32,14 +32,14 @@ namespace PizzaCourriers
         static void Main(string[] args)
         {
             //initialize uninitialized data, no clue wether these values are correct or not.
-            cooldown = 0.97;
+            cooldown = 0.98;
             temperature = 20000.0;
             limit = 10.0;
             changepercooldown = 800;
             imax = 1000000;
 
             //load map into nodelist, restaurant into resX+resY
-            InputFromFile("Simple.txt");
+            InputFromFile("");
 
             //initialize map-dependant data
             for (int num = 0; num < bezorgers.Length; num++)
@@ -54,6 +54,7 @@ namespace PizzaCourriers
                 BestSolutionCost += B.routeLength;
             CurrentCost = BestSolutionCost;
             BestSolutionOutput = StringSolution();
+            Console.WriteLine(BestSolutionCost);
             Console.WriteLine(BestSolutionOutput);
             
             //optimalize
