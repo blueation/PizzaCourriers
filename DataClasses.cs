@@ -168,7 +168,7 @@ namespace PizzaCourriers
         #region Functions with Other Effects on Nodes
         public void FlipOrder(Node first, Node last) //2-opt
         {
-            costsFlipOrder(first, last);
+            routeLength += costsFlipOrder(first, last);
 
             //changes the cross-directional references between first, first.previous, last and last.next
             Node helper = first.previous;
