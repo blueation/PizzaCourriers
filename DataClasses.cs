@@ -213,6 +213,20 @@ namespace PizzaCourriers
             sb.Append('\n');
             return sb.ToString();
         }
+
+        public int GetLenght()
+        {
+            Node n = firstNode;
+            if (n == null)
+                return 0;
+            int tel = 0;
+            while (n != null)
+            {
+                tel++;
+                n = n.next;
+            }
+            return tel;
+        }
     }
 
     class Node

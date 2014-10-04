@@ -9,7 +9,7 @@ namespace PizzaCourriers
 {
     partial class Program
     {
-        public static Random random = new Random(9987);
+        public static Random random = new Random();
         public static Stopwatch stopwatch = new Stopwatch();
 
         public static List<Node> nodelist = new List<Node>();
@@ -61,9 +61,11 @@ namespace PizzaCourriers
             SimulatedAnealing();
 
             //output
-
+            BestSolutionOutput = StringSolution();
             Console.WriteLine(BestSolutionCost);
             Console.WriteLine(BestSolutionOutput);
+            foreach (Bezorger b in bezorgers)
+                Console.WriteLine(b.GetLenght());
             Console.ReadLine();
         }
 

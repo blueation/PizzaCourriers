@@ -50,7 +50,10 @@ namespace PizzaCourriers
         {
             StringBuilder sb = new StringBuilder();
             foreach (Bezorger b in bezorgers)
+            {
+                
                 sb.Append(b.StringSolution());
+            }
             return sb.ToString();
         }
     }

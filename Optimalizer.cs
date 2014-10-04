@@ -76,7 +76,8 @@ namespace PizzaCourriers
                 //Console.WriteLine("----");
                 i++;
                 if (i % changepercooldown == 0)
-                    temperature *= cooldown;
+                    temperature *= cooldown; // expodentieel
+                    //temperature -= changepercooldown; // linear
             }
             stopwatch.Stop();
 

@@ -11,7 +11,7 @@ namespace PizzaCourriers
         int minx = 0;
         int maxy = 218;
         int miny = 0;
-        int amountofdata = 100;
+        int amountofdata = 101;
         int amountofsetspersize = 5;
         public DataSet[] dataset;
         //Random random;
