@@ -61,7 +61,7 @@ namespace PizzaCourriers
             SimulatedAnealing();
 
             //output
-            BestSolutionOutput = StringSolution();
+            //BestSolutionOutput = StringSolution(); -> The solution the program has in the last state, is not the bestsolution
             Console.WriteLine(BestSolutionCost);
             Console.WriteLine(BestSolutionOutput);
             foreach (Bezorger b in bezorgers)
