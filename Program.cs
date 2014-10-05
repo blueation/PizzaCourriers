@@ -39,7 +39,7 @@ namespace PizzaCourriers
             imax = 1000000;
 
             //load map into nodelist, restaurant into resX+resY
-            InputFromFile("");
+            InputFromFile("GeoSquare1.txt");
 
             //initialize map-dependant data
             for (int num = 0; num < bezorgers.Length; num++)
