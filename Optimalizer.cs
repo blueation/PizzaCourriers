@@ -11,7 +11,7 @@ namespace PizzaCourriers
         public static void SimulatedAnealing()
         {
             int i = 0;
-            stopwatch.Start();
+            //stopwatch.Start();
             while (temperature > limit && i < imax)
             {
                 int r = random.Next(opt2chance + opt2halfchance);
@@ -79,12 +79,12 @@ namespace PizzaCourriers
                     temperature *= cooldown; // expodentieel
                     //temperature -= changepercooldown; // linear
             }
-            stopwatch.Stop();
+            //stopwatch.Stop();
 
-            if (temperature <= limit)
-                Console.WriteLine("temperature limit reached");
-            if (i >= imax)
-                Console.WriteLine("iteration limit reached");
+            //if (temperature <= limit)
+                //Console.WriteLine("temperature limit reached");
+            //if (i >= imax)
+                //Console.WriteLine("iteration limit reached");
 
         }
 
