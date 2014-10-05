@@ -13,7 +13,7 @@ namespace PizzaCourriers
         public static Stopwatch stopwatch = new Stopwatch();
 
         public static List<Node> nodelist = new List<Node>();
-        public static Bezorger[] bezorgers = new Bezorger[4];
+        public static Bezorger[] bezorgers = new Bezorger[1];
         public static int resX, resY;
 
         public static int CurrentCost = 0;
@@ -33,8 +33,8 @@ namespace PizzaCourriers
         {
             //initialize uninitialized data, no clue wether these values are correct or not.
             cooldown = 0.98;
-            temperature = 20000.0;
-            limit = 10.0;
+            temperature = 11.0;
+            limit = 1.0;
             changepercooldown = 800;
             imax = 1000000;
 
@@ -48,7 +48,7 @@ namespace PizzaCourriers
             //create initial solution, optimality is not important, at all at this point
             for (int i = 0; i < nodelist.Count; i++)
             {
-                bezorgers[i % 4].AddNodetoEnd(nodelist[i]);
+                bezorgers[i % bezorgers.Length].AddNodetoEnd(nodelist[i]);
             }
             foreach (Bezorger B in bezorgers)
                 BestSolutionCost += B.routeLength;
@@ -65,7 +65,7 @@ namespace PizzaCourriers
             Console.WriteLine(BestSolutionCost);
             Console.WriteLine(BestSolutionOutput);
             foreach (Bezorger b in bezorgers)
-                Console.WriteLine(b.GetLenght());
+                Console.WriteLine(b.GetLength());
             Console.ReadLine();
         }
 

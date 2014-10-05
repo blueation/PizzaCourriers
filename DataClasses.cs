@@ -214,7 +214,7 @@ namespace PizzaCourriers
             return sb.ToString();
         }
 
-        public int GetLenght()
+        public int GetLength()
         {
             Node n = firstNode;
             if (n == null)
