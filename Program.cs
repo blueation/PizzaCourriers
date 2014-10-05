@@ -16,8 +16,9 @@ namespace PizzaCourriers
         public static Bezorger[] bezorgers = new Bezorger[1];
         public static int resX, resY;
 
-		public static int nrTestRuns = 10;
+		public static int nrTestRuns = 100;
 		public static int testBestCost = int.MaxValue;
+		public static int testMeanCost = 0;
 
         public static int CurrentCost = 0;
         public static int BestSolutionCost = 0;
@@ -48,7 +49,7 @@ namespace PizzaCourriers
 				BestSolutionCost = 0;
 
 				//load map into nodelist, restaurant into resX+resY
-				InputFromFile ("GeoSquare1.txt");
+				InputFromFile ("GeoSquare2.txt");
 
 				//initialize map-dependant data
 				for (int num = 0; num < bezorgers.Length; num++)
@@ -70,17 +71,20 @@ namespace PizzaCourriers
 				//optimalize
 				SimulatedAnealing ();
 
+				//Gather information multistart
 				if (testBestCost > BestSolutionCost)
 					testBestCost = BestSolutionCost;
+				testMeanCost += BestSolutionCost;
 
 				//output
 				//BestSolutionOutput = StringSolution(); -> The solution the program has in the last state, is not the bestsolution
-				Console.WriteLine(BestSolutionCost);
+				//Console.WriteLine(BestSolutionCost);
 				//Console.WriteLine(BestSolutionOutput);
 				//foreach (Bezorger b in bezorgers)
 				//Console.WriteLine(b.GetLength());
 			}
 			Console.WriteLine("Best value in " + nrTestRuns + " runs: " + testBestCost);
+			Console.WriteLine("Mean cost over " + nrTestRuns + " of runs: " + (testMeanCost / nrTestRuns));
             Console.ReadLine();
         }
 
