@@ -16,7 +16,6 @@ namespace PizzaCourriers
         public static Bezorger[] bezorgers = new Bezorger[4];
         public static int resX, resY;
 
-        public static DateTime tijd;
         public static int CurrentCost = 0;
         public static int QualityCost = 0;
         public static int BestSolutionCost = 0;

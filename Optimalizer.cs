@@ -11,6 +11,7 @@ namespace PizzaCourriers
         public static void SimulatedAnealing()
         {
             bool change = false;
+			int lasti = 0;
             int i = 0;
             //stopwatch.Start();
             while (/*temperature > limit &&*/ i < imax)
@@ -110,11 +111,11 @@ namespace PizzaCourriers
                             temperature = EnergyBarrier / Math.Log(i + 1);
                             break;
                         case "speed":
-                            Epsilon = -(DateTime.Now.Ticks - tijd.Ticks);
+                            Epsilon = -(i - lasti);
                             if (change)
                             {
                                 change = false;
-                                tijd = DateTime.Now;
+                                lasti = i;
                             }
                             temperature = -V_s * temperature / Epsilon / Math.Sqrt(Capacity);
                             break;
