@@ -71,6 +71,8 @@ namespace PizzaCourriers
                 {
                     BestSolutionCost = CurrentCost;
                     BestSolutionOutput = StringSolution();
+                    foreach (Bezorger b in Program.bezorgers)
+                        b.GetLength();
                 }
 
                 //Console.WriteLine("----");

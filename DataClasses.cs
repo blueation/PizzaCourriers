@@ -13,6 +13,7 @@ namespace PizzaCourriers
         public List<Node> route = new List<Node>();
         public Node firstNode, lastNode;
         public int routeLength = 0;
+        public int aantalbezorgingen = 0;
 
         public Bezorger(int ID)
         {
@@ -214,18 +215,23 @@ namespace PizzaCourriers
             return sb.ToString();
         }
 
-        public int GetLength()
+        public void GetLength()
         {
             Node n = firstNode;
             if (n == null)
-                return 0;
-            int tel = 0;
-            while (n != null)
             {
-                tel++;
-                n = n.next;
+                aantalbezorgingen = 0;
             }
-            return tel;
+            else
+            {
+                int tel = 0;
+                while (n != null)
+                {
+                    tel++;
+                    n = n.next;
+                }
+                aantalbezorgingen = tel;
+            }
         }
     }
 

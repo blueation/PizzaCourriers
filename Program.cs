@@ -34,9 +34,9 @@ namespace PizzaCourriers
         public static int opt2chance = 50;
         public static int opt2halfchance = 50;
         
-        public static string schedule = "constant";
+        //public static string schedule = "constant";
         //public static string schedule = "linear";
-        //public static string schedule = "exponential";
+        public static string schedule = "exponential";
         //public static string schedule = "logarithmic";
         //public static string schedule = "speed";
 
@@ -52,7 +52,7 @@ namespace PizzaCourriers
                     imax = 1000000;
                     break;
                 case "linear":
-                    cooldown = 0.98;
+                    cooldown = 1.5;
                     temperature = 10.0;
                     limit = 1.0;
                     changepercooldown = 800;
@@ -115,7 +115,7 @@ namespace PizzaCourriers
             Console.WriteLine(BestSolutionCost);
             Console.WriteLine(BestSolutionOutput);
             foreach (Bezorger b in bezorgers)
-                Console.WriteLine(b.GetLength());
+                Console.WriteLine(b.aantalbezorgingen);
             Console.ReadLine();
         }
 
