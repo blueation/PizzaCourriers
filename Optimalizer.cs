@@ -10,6 +10,7 @@ namespace PizzaCourriers
     {
         public static void SimulatedAnealing()
         {
+            bool change = false;
             int i = 0;
             //stopwatch.Start();
             while (/*temperature > limit &&*/ i < imax)
@@ -33,44 +34,60 @@ namespace PizzaCourriers
                         n1 = ni;
                     }
 
-                    int opt2cost = B.costsFlipOrder(n1, n2);
-                    if (ShouldChange(opt2cost, temperature))
+                    int before = QualityCost;
+                    B.FlipOrder(n1, n2);
+                    int after = CalculateQuality();
+                    //int opt2cost = B.costsFlipOrder(n1, n2);
+                    if (ShouldChange(after - before, temperature))
                     {
-                        B.FlipOrder(n1, n2);
-                        CurrentCost += opt2cost;
+                        //B.FlipOrder(n1, n2);
+                        //CurrentCost += opt2cost;
+                        QualityCost = after;
                     }
+                    else
+                        B.FlipOrder(n2, n1);
                 }
                 else //(r < opt2chance + opt2halfchance)
                 {
                     //Console.WriteLine("opt2half");
 
-                    int opt2halfcost = 0;
+                    //int opt2halfcost = 0;
+                    int before = QualityCost;
                     Bezorger B1 = getRandomBezorgerNonEmpty;
                     Node n = B1.getRandomNode;
                     //to make this easier to reason about, actually temporarily changing B1's route
                     //  -prevents B2 from returning n as location
                     //  -prevents B2's change cost to possibly be wrong.
                     Node reinsertlocationb1 = n.previous;
-                    opt2halfcost += B1.costsRemoveNode(n);
+                    //opt2halfcost += B1.costsRemoveNode(n);
                     B1.RemoveNode(n);
                     
                     Bezorger B2 = bezorgers[random.Next(bezorgers.Length)];
                     Node l = B2.getRandomNodeOrNull;
-                    opt2halfcost += B2.costsAddAfter(n, l);
-                    
-                    if (ShouldChange(opt2halfcost, temperature))
+                    //opt2halfcost += B2.costsAddAfter(n, l);
+                    B2.AddAfter(n, l);
+                    int after = CalculateQuality();
+
+                    if (ShouldChange(after - before, temperature))
                     {
-                        B2.AddAfter(n, l);
-                        CurrentCost += opt2halfcost;
+                        //B2.AddAfter(n, l);
+                        //CurrentCost += opt2halfcost;
+                        QualityCost = after;
                     }
                     else
+                    {
+                        B2.RemoveNode(n);
                         B1.AddAfter(n, reinsertlocationb1); //put back n where it belongs, should not change
+                    }
                 }
 
-                if (CurrentCost < BestSolutionCost)
+                //if (CurrentCost < BestSolutionCost)
+                if (QualityCost < BestSolutionQuality)
                 {
-                    BestSolutionCost = CurrentCost;
+                    //BestSolutionCost = CurrentCost;
+                    BestSolutionQuality = QualityCost;
                     BestSolutionOutput = StringSolution();
+                    change = true;
                     foreach (Bezorger b in Program.bezorgers)
                         b.GetLength();
                 }
@@ -93,6 +110,12 @@ namespace PizzaCourriers
                             temperature = EnergyBarrier / Math.Log(i + 1);
                             break;
                         case "speed":
+                            Epsilon = -(DateTime.Now.Ticks - tijd.Ticks);
+                            if (change)
+                            {
+                                change = false;
+                                tijd = DateTime.Now;
+                            }
                             temperature = -V_s * temperature / Epsilon / Math.Sqrt(Capacity);
                             break;
                     }
@@ -123,6 +146,26 @@ namespace PizzaCourriers
                 Bezorger[] temp = bezorgers.Where(item => item.route.Count > 0).ToArray();
                 return temp[random.Next(temp.Count())];
             }
+        }
+
+        public static int CalculateQuality()
+        {
+            int totalQuality = 0;
+            foreach (Bezorger B in bezorgers)
+            {
+                int elapsedtime = 0;
+                Node prevClient = null;
+                Node currClient = B.firstNode;
+                while (currClient != null)
+                {
+                    elapsedtime += Help.dist(prevClient, currClient);
+                    totalQuality += elapsedtime;
+                    prevClient = currClient;
+                    currClient = currClient.next;
+                }
+            }
+
+            return totalQuality;
         }
     }
 }

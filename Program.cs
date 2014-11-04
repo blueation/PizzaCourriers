@@ -16,8 +16,11 @@ namespace PizzaCourriers
         public static Bezorger[] bezorgers = new Bezorger[4];
         public static int resX, resY;
 
+        public static DateTime tijd;
         public static int CurrentCost = 0;
+        public static int QualityCost = 0;
         public static int BestSolutionCost = 0;
+        public static int BestSolutionQuality = 0;
         public static string BestSolutionOutput;
 
         public static double cooldown;          //only used with linear and exponential
@@ -25,7 +28,7 @@ namespace PizzaCourriers
         public static double limit;             //always used
         public static int changepercooldown;    //always used
         public static int imax;                 //always used
-        public static int OptimalCost;          //only used with logarithmic and is the cost of the optimal solution. This would be an approximation in practice
+        public static int OptimalQuality;          //only used with logarithmic and is the cost of the optimal solution. This would be an approximation in practice
         public static int EnergyBarrier;        //only used with logarithmic and is calculated at the start from OptimalCost and the starting solution
         public static double V_s;               //only used with thermodynamic speed
         public static double Epsilon;           //only used with thermodynamic speed
@@ -36,9 +39,9 @@ namespace PizzaCourriers
         
         //public static string schedule = "constant";
         //public static string schedule = "linear";
-        public static string schedule = "exponential";
+        //public static string schedule = "exponential";
         //public static string schedule = "logarithmic";
-        //public static string schedule = "speed";
+        public static string schedule = "speed";
 
         static void Main(string[] args)
         {
@@ -60,20 +63,20 @@ namespace PizzaCourriers
                     break;
                 case "exponential":
                     cooldown = 0.98;
-                    temperature = 10.0;
+                    temperature = 500.0;
                     limit = 1.0;
                     changepercooldown = 800;
                     imax = 1000000;
                     break;
                 case "logarithmic":
-                    OptimalCost = 100;
-                    temperature = 11;
+                    OptimalQuality = 1560;
+                    temperature = 12;
                     limit = 1.0;
                     changepercooldown = 800;
                     imax = 1000000;
                     break;
                 case "speed":
-                    //V_s = ;
+                    V_s = 1;
                     //Epsilon = ;
                     //Capacity = ;
                     temperature = 10.0;
@@ -96,15 +99,18 @@ namespace PizzaCourriers
             {
                 bezorgers[i % bezorgers.Length].AddNodetoEnd(nodelist[i]);
             }
-            foreach (Bezorger B in bezorgers)
-                BestSolutionCost += B.routeLength;
-            CurrentCost = BestSolutionCost;
+            //foreach (Bezorger B in bezorgers)
+            //    BestSolutionCost += B.routeLength;
+            //CurrentCost = BestSolutionCost;
+            BestSolutionQuality = CalculateQuality();
+            QualityCost = BestSolutionQuality;
             BestSolutionOutput = StringSolution();
-            Console.WriteLine(BestSolutionCost);
+            //Console.WriteLine(BestSolutionCost);
+            Console.WriteLine(BestSolutionQuality);
             Console.WriteLine(BestSolutionOutput);
 
-
-            EnergyBarrier = (CurrentCost - OptimalCost)/10;
+            Capacity = QualityCost;
+            EnergyBarrier = (CurrentCost - OptimalQuality)/75;
 
             
             //optimalize
@@ -112,7 +118,8 @@ namespace PizzaCourriers
 
             //output
             //BestSolutionOutput = StringSolution(); -> The solution the program has in the last state, is not the bestsolution
-            Console.WriteLine(BestSolutionCost);
+            //Console.WriteLine(BestSolutionCost);
+            Console.WriteLine(BestSolutionQuality);
             Console.WriteLine(BestSolutionOutput);
             foreach (Bezorger b in bezorgers)
                 Console.WriteLine(b.aantalbezorgingen);

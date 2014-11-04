@@ -1,5 +1,0 @@
-/Users/roy/Workspace/GitHub/PizzaCourriers/obj/x86/Debug/.NETFramework,Version=v4.0,Profile=Client.AssemblyAttribute.cs
-/Users/roy/Workspace/GitHub/PizzaCourriers/bin/Debug/PizzaCourriers.exe.mdb
-/Users/roy/Workspace/GitHub/PizzaCourriers/bin/Debug/PizzaCourriers.exe
-/Users/roy/Workspace/GitHub/PizzaCourriers/obj/x86/Debug/PizzaCourriers.exe
-/Users/roy/Workspace/GitHub/PizzaCourriers/obj/x86/Debug/PizzaCourriers.exe.mdb
