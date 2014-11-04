@@ -52,8 +52,8 @@ namespace PizzaCourriers
                     imax = 1000000;
                     break;
                 case "linear":
-                    cooldown = 1.5;
-                    temperature = 10.0;
+                    cooldown = 0.01;
+                    temperature = 15;
                     limit = 1.0;
                     changepercooldown = 800;
                     imax = 1000000;

@@ -10,3 +10,5 @@ C:\Users\Teus\Documents\GitHub\PizzaCourriers\PizzaCourriers\bin\Debug\PizzaCour
 C:\Users\Teus\Documents\GitHub\PizzaCourriers\PizzaCourriers\bin\Debug\PizzaCourriers.pdb
 C:\Users\Teus\Documents\GitHub\PizzaCourriers\PizzaCourriers\obj\x86\Debug\PizzaCourriers.csprojResolveAssemblyReference.cache
 C:\Users\Teus\Documents\GitHub\PizzaCourriers\PizzaCourriers\obj\x86\Debug\PizzaCourriers.exe
+\\psf\Home\Desktop\GitHub\PizzaCourriers\obj\x86\Debug\PizzaCourriers.exe
+\\psf\Home\Desktop\GitHub\PizzaCourriers\obj\x86\Debug\PizzaCourriers.pdb
