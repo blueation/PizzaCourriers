@@ -38,10 +38,10 @@ namespace PizzaCourriers
         public static int opt2halfchance = 50;
         
         //public static string schedule = "constant";
-        //public static string schedule = "linear";
+        public static string schedule = "linear";
         //public static string schedule = "exponential";
         //public static string schedule = "logarithmic";
-        public static string schedule = "speed";
+        //public static string schedule = "speed";
 
         static void Main(string[] args)
         {
@@ -55,8 +55,8 @@ namespace PizzaCourriers
                     imax = 1000000;
                     break;
                 case "linear":
-                    cooldown = 1.5;
-                    temperature = 10.0;
+                    cooldown = 0.01;
+                    temperature = 15.0;
                     limit = 1.0;
                     changepercooldown = 800;
                     imax = 1000000;
