@@ -17,7 +17,9 @@ namespace PizzaCourriers
         public static int resX, resY;
 
         public static int CurrentCost = 0;
+        public static int QualityCost = 0;
         public static int BestSolutionCost = 0;
+        public static int BestSolutionQuality = 0;
         public static string BestSolutionOutput;
 
         public static double cooldown;          //only used with linear and exponential
@@ -34,9 +36,9 @@ namespace PizzaCourriers
         public static int opt2chance = 50;
         public static int opt2halfchance = 50;
         
-        //public static string schedule = "constant";
+        public static string schedule = "constant";
         //public static string schedule = "linear";
-        public static string schedule = "exponential";
+        //public static string schedule = "exponential";
         //public static string schedule = "logarithmic";
         //public static string schedule = "speed";
 
@@ -60,7 +62,7 @@ namespace PizzaCourriers
                     break;
                 case "exponential":
                     cooldown = 0.98;
-                    temperature = 10.0;
+                    temperature = 500.0;
                     limit = 1.0;
                     changepercooldown = 800;
                     imax = 1000000;
@@ -96,11 +98,14 @@ namespace PizzaCourriers
             {
                 bezorgers[i % bezorgers.Length].AddNodetoEnd(nodelist[i]);
             }
-            foreach (Bezorger B in bezorgers)
-                BestSolutionCost += B.routeLength;
-            CurrentCost = BestSolutionCost;
+            //foreach (Bezorger B in bezorgers)
+            //    BestSolutionCost += B.routeLength;
+            //CurrentCost = BestSolutionCost;
+            BestSolutionQuality = CalculateQuality();
+            QualityCost = BestSolutionQuality;
             BestSolutionOutput = StringSolution();
-            Console.WriteLine(BestSolutionCost);
+            //Console.WriteLine(BestSolutionCost);
+            Console.WriteLine(BestSolutionQuality);
             Console.WriteLine(BestSolutionOutput);
 
 
@@ -112,7 +117,8 @@ namespace PizzaCourriers
 
             //output
             //BestSolutionOutput = StringSolution(); -> The solution the program has in the last state, is not the bestsolution
-            Console.WriteLine(BestSolutionCost);
+            //Console.WriteLine(BestSolutionCost);
+            Console.WriteLine(BestSolutionQuality);
             Console.WriteLine(BestSolutionOutput);
             foreach (Bezorger b in bezorgers)
                 Console.WriteLine(b.aantalbezorgingen);
