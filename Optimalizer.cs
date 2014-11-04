@@ -11,6 +11,7 @@ namespace PizzaCourriers
         public static void SimulatedAnealing()
         {
             int i = 0;
+            bool change = false;
             //stopwatch.Start();
             while (/*temperature > limit &&*/ i < imax)
             {
@@ -71,6 +72,7 @@ namespace PizzaCourriers
                 {
                     BestSolutionCost = CurrentCost;
                     BestSolutionOutput = StringSolution();
+                    change = true;
                     foreach (Bezorger b in Program.bezorgers)
                         b.GetLength();
                 }
@@ -93,6 +95,12 @@ namespace PizzaCourriers
                             temperature = EnergyBarrier / Math.Log(i + 1);
                             break;
                         case "speed":
+                            Epsilon = -(DateTime.Now.Ticks - tijd.Ticks);
+                            if (change)
+                            {
+                                change = false;
+                                tijd = DateTime.Now;
+                            }
                             temperature = -V_s * temperature / Epsilon / Math.Sqrt(Capacity);
                             break;
                     }

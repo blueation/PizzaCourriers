@@ -15,7 +15,7 @@ namespace PizzaCourriers
         public static List<Node> nodelist = new List<Node>();
         public static Bezorger[] bezorgers = new Bezorger[4];
         public static int resX, resY;
-
+        public static DateTime tijd;
         public static int CurrentCost = 0;
         public static int BestSolutionCost = 0;
         public static string BestSolutionOutput;
@@ -36,9 +36,9 @@ namespace PizzaCourriers
         
         //public static string schedule = "constant";
         //public static string schedule = "linear";
-        public static string schedule = "exponential";
+        //public static string schedule = "exponential";
         //public static string schedule = "logarithmic";
-        //public static string schedule = "speed";
+        public static string schedule = "speed";
 
         static void Main(string[] args)
         {
@@ -73,9 +73,9 @@ namespace PizzaCourriers
                     imax = 1000000;
                     break;
                 case "speed":
-                    //V_s = ;
-                    //Epsilon = ;
-                    //Capacity = ;
+                    V_s = 1;
+                    Epsilon = -5;
+                    Capacity = 10;
                     temperature = 10.0;
                     limit = 1.0;
                     changepercooldown = 800;
@@ -105,8 +105,8 @@ namespace PizzaCourriers
 
 
             EnergyBarrier = (CurrentCost - OptimalCost)/10;
-
-            
+            Capacity = CurrentCost;
+            tijd = DateTime.Now;
             //optimalize
             SimulatedAnealing();
 
