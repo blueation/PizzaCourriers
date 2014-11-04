@@ -86,7 +86,7 @@ namespace PizzaCourriers
                         case "constant":
                             break;
                         case "linear":
-                            temperature -= changepercooldown;
+                            temperature -= cooldown;
                             break;
                         case "exponential":
                             temperature *= cooldown;
