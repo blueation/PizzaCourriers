@@ -24,24 +24,70 @@ namespace PizzaCourriers
         public static int BestSolutionCost = 0;
         public static string BestSolutionOutput;
 
-        public static double cooldown;
-        public static double temperature;
-        public static double limit;
-        public static int changepercooldown;
-        public static int imax;
+        public static double cooldown;          //only used with linear and exponential
+        public static double temperature;       //always used
+        public static double limit;             //always used
+        public static int changepercooldown;    //always used
+        public static int imax;                 //always used
+        public static int OptimalCost;          //only used with logarithmic and is the cost of the optimal solution. This would be an approximation in practice
+        public static int EnergyBarrier;        //only used with logarithmic and is calculated at the start from OptimalCost and the starting solution
+        public static double V_s;               //only used with thermodynamic speed
+        public static double Epsilon;           //only used with thermodynamic speed
+        public static int Capacity;             //only used with thermodynamic speed
 
         public static int opt2chance = 50;
         public static int opt2halfchance = 50;
+
+        //public static string schedule = "constant";
+        //public static string schedule = "linear";
+        //public static string schedule = "exponential";
+        public static string schedule = "logarithmic";
+        //public static string schedule = "speed";
 
         static void Main(string[] args)
         {
 			for (int y = 0; y < nrTestRuns; y++) {
 				//initialize uninitialized data, no clue wether these values are correct or not.
-				cooldown = 0.98;
-				temperature = 10.0;
-				limit = 1.0;
-				changepercooldown = 800;
-				imax = 1000000;
+                switch (schedule)
+                {
+                    case "constant":
+                        temperature = 10.0;
+                        limit = 1.0;
+                        changepercooldown = 800;
+                        imax = 1000000;
+                        break;
+                    case "linear":
+                        cooldown = 1.0;
+                        temperature = 10.0;
+                        limit = 1.0;
+                        changepercooldown = 800;
+                        imax = 1000000;
+                        break;
+                    case "exponential":
+                        cooldown = 0.98;
+                        temperature = 10.0;
+                        limit = 1.0;
+                        changepercooldown = 800;
+                        imax = 1000000;
+                        break;
+                    case "logarithmic":
+                        OptimalCost = 100;
+                        //temperature is set later
+                        limit = 9;
+                        changepercooldown = 80;
+                        imax = int.MaxValue;
+                        break;
+                    case "speed":
+                        //V_s = ;
+                        //Epsilon = ;
+                        //Capacity = ;
+                        temperature = 10.0;
+                        limit = 1.0;
+                        changepercooldown = 800;
+                        imax = 1000000;
+                        break;
+
+                }
 
 				nodelist = new List<Node>();
 				bezorgers = new Bezorger[1];
@@ -63,6 +109,12 @@ namespace PizzaCourriers
 					BestSolutionCost += B.routeLength;
 				CurrentCost = BestSolutionCost;
 				BestSolutionOutput = StringSolution ();
+
+                if (schedule == "logarithmic")
+                {
+                    EnergyBarrier = CurrentCost - OptimalCost;
+                    temperature = EnergyBarrier / Math.Log(1 + 1);
+                }
 
 				if(y == 0)
 					Console.WriteLine (BestSolutionCost);

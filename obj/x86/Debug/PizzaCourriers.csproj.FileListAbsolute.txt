@@ -3,3 +3,5 @@ C:\Users\Blueation\Documents\GitHub\PizzaCourriers\PizzaCourriers\bin\Debug\Pizz
 C:\Users\Blueation\Documents\GitHub\PizzaCourriers\PizzaCourriers\obj\x86\Debug\PizzaCourriers.exe
 C:\Users\Blueation\Documents\GitHub\PizzaCourriers\PizzaCourriers\obj\x86\Debug\PizzaCourriers.pdb
 C:\Users\Blueation\Documents\GitHub\PizzaCourriers\PizzaCourriers\obj\x86\Debug\PizzaCourriers.csprojResolveAssemblyReference.cache
+C:\Users\Blueation\Documents\GitHub\PizzaCourriers\obj\x86\Debug\PizzaCourriers.exe
+C:\Users\Blueation\Documents\GitHub\PizzaCourriers\obj\x86\Debug\PizzaCourriers.pdb

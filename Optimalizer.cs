@@ -11,6 +11,7 @@ namespace PizzaCourriers
         public static void SimulatedAnealing()
         {
             int i = 0;
+            int t = 0;
             //stopwatch.Start();
             while (temperature > limit && i < imax)
             {
@@ -76,8 +77,26 @@ namespace PizzaCourriers
                 //Console.WriteLine("----");
                 i++;
                 if (i % changepercooldown == 0)
-                    temperature *= cooldown; // expodentieel
-                    //temperature -= changepercooldown; // linear
+                {
+                    t++;
+                    switch (schedule)
+                    {
+                        case "constant":
+                            break;
+                        case "linear":
+                            temperature -= changepercooldown;
+                            break;
+                        case "exponential":
+                            temperature *= cooldown;
+                            break;
+                        case "logarithmic":
+                            temperature = EnergyBarrier / Math.Log(t + 1);
+                            break;
+                        case "speed":
+                            temperature = -V_s * temperature / Epsilon / Math.Sqrt(Capacity);
+                            break;
+                    }
+                }
             }
             //stopwatch.Stop();
 
